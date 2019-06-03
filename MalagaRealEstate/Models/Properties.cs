@@ -34,6 +34,7 @@ namespace MalagaRealEstate.Models
         [Display(Name = "Metros cuadrados")]
         public int? SquareMeters { get; set; }
 
+        [DataType(DataType.Currency)]
         [Display(Name = "Precio del dueño")]
         public int? OwnerPrice { get; set; }
 
@@ -70,8 +71,12 @@ namespace MalagaRealEstate.Models
         [Display(Name = "Estado de la propiedad")]
         public string PropState { get; set; }
 
+        [Display(Name = "Fecha publicación")]
         public DateTime? PostedDay { get; set; }
+
+        [Display(Name = "Fecha última actualización")]
         public DateTime? Updated { get; set; }
+
         [Column(TypeName = "decimal(22,19)")]
         public decimal? Latitude { get; set; }
         [Column(TypeName = "decimal(22,19)")]

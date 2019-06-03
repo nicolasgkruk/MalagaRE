@@ -1,6 +1,4 @@
 lugaresModulo = (function () {
-
-
     function autocompletar() { 
         
         var circulo = new google.maps.Circle({
@@ -17,8 +15,8 @@ lugaresModulo = (function () {
         autocomplete = new google.maps.places.Autocomplete(inputDireccion, options);
   }
     function inicializar () {
-    servicioLugares = new google.maps.places.PlacesService(mapa)
-        autocompletar()
+        servicioLugares = new google.maps.places.PlacesService(mapa);
+        autocompletar();
   }
 
   

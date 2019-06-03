@@ -1,5 +1,5 @@
   geocodificadorModulo = (function () {
-  var geocodificador // given an address, returns coordinates.
+      var geocodificador;
   
   function usaDireccion (direccion, funcionALlamar) {
       geocodificador.geocode(
@@ -13,17 +13,19 @@
       };
 
   function inicializar () {
-    var that = this
-    geocodificador = new google.maps.Geocoder()
+      var that = this;
+      geocodificador = new google.maps.Geocoder();
 
       document.querySelector('#establecerDireccion').addEventListener('click', function (e) {
           e.preventDefault();
+
           var direccion = document.getElementById('direccion').value;
 
           geocodificador.geocode(
               { 'address': direccion }, function (results, status) {
                   if (status == google.maps.GeocoderStatus.OK) {
                       if (!google.maps.geometry.poly.containsLocation(results[0].geometry.location, polygon)) { 
+                          $("#direccion").val("");
                           alert("La dirección ingresada no pertenece a la ciudad de Málaga y alrededores. Por favor introduzca una dirección que esté dentro del polígono representado en el mapa.");            
                       } else {
                           that.usaDireccion(direccion, direccionesModulo.agregarDireccionYMostrarEnMapa);

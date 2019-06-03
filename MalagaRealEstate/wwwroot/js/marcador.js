@@ -18,6 +18,16 @@ marcadorModulo = (function () {
       mapa.panTo(ubicacion)
     };
 
+    function mostrarMarcadorCliente(ubicacion) {
+        var miMarcador = new google.maps.Marker({
+            position: ubicacion,
+            map: mapa,
+            title: 'Dirección aproximada',
+            animation: google.maps.Animation.DROP,
+        });
+        mapa.panTo(ubicacion)
+    };
+
     function deleteMarkers() {
         clearMarkers();
         markers = [];
@@ -34,6 +44,7 @@ marcadorModulo = (function () {
     }
 
   return {
-    mostrarMiMarcador
+      mostrarMiMarcador,
+      mostrarMarcadorCliente
   }
 })()

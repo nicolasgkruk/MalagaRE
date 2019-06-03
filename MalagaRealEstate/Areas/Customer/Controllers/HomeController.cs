@@ -5,15 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MalagaRealEstate.Models;
+using MalagaRealEstate.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace MalagaRealEstate.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Properties.ToListAsync());
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var propertyFromDb = await _context.Properties
+                .Where(m => m.Id == id).FirstOrDefaultAsync();
+
+            return View(propertyFromDb);
+        }
+
 
         public IActionResult Privacy()
         {

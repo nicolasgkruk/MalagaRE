@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using MalagaRealEstate.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Globalization;
 
 namespace MalagaRealEstate
 {
@@ -21,6 +22,7 @@ namespace MalagaRealEstate
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("es-ES");
         }
 
         public IConfiguration Configuration { get; }

@@ -137,8 +137,6 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                     string webRootPath = _hostingEnvironment.WebRootPath;
                     var files = HttpContext.Request.Form.Files;
 
-                    //var propertyFromDb = await _context.Properties.FindAsync(id);
-
                     if (files.Count > 0)
                     {
                         //New Image has been uploaded
@@ -164,6 +162,14 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                         property.Image = @"\images\" + id + extension_new;
                     }
 
+                    var imageFromDb = await _context.Properties
+                        .Where(m => m.Id == id)
+                        .Select(s => s.Image)
+                        .SingleAsync();
+
+                    if (imageFromDb != null) {
+                        property.Image = imageFromDb;
+                    }
 
                     _context.Update(property);
                     await _context.SaveChangesAsync();

@@ -1,167 +1,73 @@
 ﻿@model IEnumerable<MalagaRealEstate.Models.Properties>
+@using System.Globalization;
 
-@{
-    ViewData["Title"] = "Index";
-}
+    @{
+        ViewData["Title"] = "Índice administrador";
+    }
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Administración de publicaciones</h1><a asp-action="Create" class="btn btn-success">Añadir nueva propiedad</a>
+    </div>
+    <div class="text-left">
+        
+    </div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Header)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rooms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bathrooms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FloorNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SquareMeters)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OwnerPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Garaje)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AirConditioning)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Elevator)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Exterior)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Garden)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SwimmingPool)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Terrace)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StorageRoom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostedDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Latitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Updated)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Header)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rooms)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bathrooms)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FloorNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SquareMeters)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Garaje)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AirConditioning)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Elevator)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exterior)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Garden)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SwimmingPool)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Terrace)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StorageRoom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostedDay)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Latitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Longitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Header)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rooms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SquareMeters)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OwnerPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PostedDay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Updated)
+                </th>
+                <th>Operaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Header)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rooms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SquareMeters)
+                    </td>
+                    <td>
+                        @String.Format("{0:C0}", item.OwnerPrice)
+                    </td>
+                    <td>
+                        @item.PostedDay.ToString().Substring(0, 10)
+                    </td>
+                    <td>
+                        @item.Updated.ToString().Substring(0, 10)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" class="btn btn-sm btn-info" asp-route-id="@item.Id">Editar</a>
+                        <a asp-action="Delete" class="btn btn-sm btn-danger" asp-route-id="@item.Id">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
