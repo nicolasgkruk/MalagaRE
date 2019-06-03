@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MalagaRealEstate.Data;
 using MalagaRealEstate.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Internal;
+using System.IO;
+using MalagaRealEstate.Utility;
 
 namespace MalagaRealEstate.Areas.Admin.Controllers
 {
@@ -14,9 +18,12 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
     public class PropertiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public PropertiesController(ApplicationDbContext context)
+
+        public PropertiesController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
+            _hostingEnvironment = hostingEnvironment;
             _context = context;
         }
 
@@ -55,15 +62,43 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Header,Description,Rooms,Bathrooms,FloorNumber,SquareMeters,OwnerPrice,Garaje,AirConditioning,Elevator,Exterior,Garden,SwimmingPool,Terrace,StorageRoom,Image,PostedDay,PropType,PropState,Latitude,Longitude,Updated")] Properties properties)
+        public async Task<IActionResult> Create(Properties property)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(properties);
+                _context.Add(property);
                 await _context.SaveChangesAsync();
+
+
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+
+                var propertyFromDb = await _context.Properties.FindAsync(property.Id);
+                if (files.Count > 0)
+                {
+                    //if user uploaded image:
+                    var uploads = Path.Combine(webRootPath, "images");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    using (var filesStream = new FileStream(Path.Combine(uploads, property.Id + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(filesStream);
+                    }
+                    propertyFromDb.Image = @"\images\" + propertyFromDb.Id + extension;
+                }
+                else
+                {
+                    //no file was uploaded, so use default
+                    var uploads = Path.Combine(webRootPath, @"images\" + SD.DefaultPropImage);
+                    System.IO.File.Copy(uploads, webRootPath + @"\images\" + propertyFromDb.Id + ".jpg");
+                    propertyFromDb.Image = @"\images\" + propertyFromDb.Id + ".jpg";
+                }
+
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(properties);
+            return View(property);
         }
 
         // GET: Admin/Properties/Edit/5
@@ -87,9 +122,9 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Header,Description,Rooms,Bathrooms,FloorNumber,SquareMeters,OwnerPrice,Garaje,AirConditioning,Elevator,Exterior,Garden,SwimmingPool,Terrace,StorageRoom,Image,PostedDay,PropType,PropState,Latitude,Longitude,Updated")] Properties properties)
+        public async Task<IActionResult> Edit(int id, Properties property)
         {
-            if (id != properties.Id)
+            if (id != property.Id)
             {
                 return NotFound();
             }
@@ -98,12 +133,44 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(properties);
+                    //Work on the image saving section
+                    string webRootPath = _hostingEnvironment.WebRootPath;
+                    var files = HttpContext.Request.Form.Files;
+
+                    //var propertyFromDb = await _context.Properties.FindAsync(id);
+
+                    if (files.Count > 0)
+                    {
+                        //New Image has been uploaded
+                        var uploads = Path.Combine(webRootPath, "images");
+                        var extension_new = Path.GetExtension(files[0].FileName);
+
+                        //Delete the original file
+                        if (property.Image != null)
+                        {
+                         var imagePath = Path.Combine(webRootPath, property.Image.TrimStart('\\'));
+
+                            if (System.IO.File.Exists(imagePath))
+                            {
+                                System.IO.File.Delete(imagePath);
+                            }
+                        }
+                       
+                        //we will upload the new file
+                        using (var filesStream = new FileStream(Path.Combine(uploads, property.Id + extension_new), FileMode.Create))
+                        {
+                            files[0].CopyTo(filesStream);
+                        }
+                        property.Image = @"\images\" + id + extension_new;
+                    }
+
+
+                    _context.Update(property);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PropertiesExists(properties.Id))
+                    if (!PropertiesExists(property.Id))
                     {
                         return NotFound();
                     }
@@ -114,7 +181,7 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(properties);
+            return View(property);
         }
 
         // GET: Admin/Properties/Delete/5
