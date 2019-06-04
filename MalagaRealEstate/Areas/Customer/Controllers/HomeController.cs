@@ -26,6 +26,29 @@ namespace MalagaRealEstate.Controllers
             return View(await _context.Properties.ToListAsync());
         }
 
+        public async Task<IActionResult> Filtro(string criterio)
+        {
+            switch (criterio)
+            {
+                case "filtroPrecio":
+                    return PartialView("_FiltrosPartial", await _context.Properties.OrderBy(x => x.OwnerPrice).ToListAsync());
+
+                case "filtroFecha":
+                    return PartialView("_FiltrosPartial", await _context.Properties.OrderByDescending(x => x.Updated).ToListAsync());
+
+                case "filtroGaraje":
+                    return PartialView("_FiltrosPartial", await _context.Properties.Where(z => z.Garaje == true).ToListAsync());
+
+                case "filtroPisos":
+                    return PartialView("_FiltrosPartial", await _context.Properties.Where(z => z.PropType == "piso").ToListAsync());
+
+                case "filtroCasas":
+                    return PartialView("_FiltrosPartial", await _context.Properties.Where(z => z.PropType == "casaOChalet").ToListAsync());
+                default:
+                    return PartialView("_FiltrosPartial", await _context.Properties.ToListAsync());
+            }
+        }
+
         public async Task<IActionResult> Details(int id)
         {
             var propertyFromDb = await _context.Properties

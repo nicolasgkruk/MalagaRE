@@ -58,3 +58,7 @@ body {
 #map {
     height: 450px
 }
+
+footer {
+background-color: lightgray;
+}
