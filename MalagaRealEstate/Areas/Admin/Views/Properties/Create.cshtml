@@ -199,16 +199,16 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
-<script src='~/js/geocodificador.js'></script>
-<script src='~/js/marcador.js'></script>
-<script src='~/js/direcciones.js'></script>
-<script src='~/js/lugares.js'></script>
-<script src='~/js/apis.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?v=3&key=&libraries=places&callback=inicializarMapa" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src='~/js/geocodificador.js'></script>
+    <script src='~/js/marcador.js'></script>
+    <script src='~/js/direcciones.js'></script>
+    <script src='~/js/lugares.js'></script>
+    <script src='~/js/apis.js'></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=&libraries=places&callback=inicializarMapa" async defer></script>
 
 
-<script>
+    <script>
         tinymce.init({
             selector: 'textarea',
             plugins: "lists",
@@ -216,7 +216,7 @@
         });
 </script>
 
-<script>
+    <script>
         $.validator.methods.range = function (value, element, param) {
             var globalizedValue = value.replace(",", ".");
             return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
@@ -227,7 +227,7 @@
         }
 </script>
 
-<script>
+    <script>
         var fileInput = $('#Image');
         var maxSize = fileInput.data('max-size');
         $('.upload-form').submit(function (e) {
@@ -238,5 +238,6 @@
                     return false;
                 }
             }
+        })
 </script>
 }

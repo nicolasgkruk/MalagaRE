@@ -67,7 +67,21 @@
 
 
                         <div class="row col-12 text-justify d-none d-md-block">
-                            <p>@Html.Raw(item.Description.Substring(0, 400)) <i>... para seguir leyendo click en Ver más detalles.</i></p>
+                            
+                            @{
+                                if (item.Description.Length < 400)
+                                {
+                                    <p>@Html.Raw(item.Description)</p>
+                                }
+                                else
+                                {
+                                    <p>@Html.Raw(item.Description.Substring(0, 400)) <i>... para seguir leyendo click en <a asp-action="Details" asp-route-id="@item.Id">Ver más detalles.</a></i></p>
+                                }
+                            }    
+                            
+                           
+                            
+                            
                         </div>
                         <div class="col-md-3 col-sm-12 offset-md-9 text-center">
                             <a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.Id">Ver más detalles</a>

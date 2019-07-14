@@ -33,24 +33,6 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
             return View(await _context.Properties.ToListAsync());
         }
 
-        // GET: Admin/Properties/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var properties = await _context.Properties
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (properties == null)
-            {
-                return NotFound();
-            }
-
-            return View(properties);
-        }
-
         // GET: Admin/Properties/Create
         public IActionResult Create()
         {
@@ -84,14 +66,14 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                     {
                         files[0].CopyTo(filesStream);
                     }
-                    propertyFromDb.Image = @"\images\" + propertyFromDb.Id + extension;
+                    propertyFromDb.Image = @"/images/" + propertyFromDb.Id + extension;
                 }
                 else
                 {
                     //no file was uploaded, so use default
-                    var uploads = Path.Combine(webRootPath, @"images\" + SD.DefaultPropImage);
-                    System.IO.File.Copy(uploads, webRootPath + @"\images\" + propertyFromDb.Id + ".jpg");
-                    propertyFromDb.Image = @"\images\" + propertyFromDb.Id + ".jpg";
+                    var uploads = Path.Combine(webRootPath, @"images/" + SD.DefaultPropImage);
+                    System.IO.File.Copy(uploads, webRootPath + @"/images/" + propertyFromDb.Id + ".jpg");
+                    propertyFromDb.Image = @"/images/" + propertyFromDb.Id + ".jpg";
                 }
 
                 await _context.SaveChangesAsync();
@@ -142,11 +124,21 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                         //New Image has been uploaded
                         var uploads = Path.Combine(webRootPath, "images");
                         var extension_new = Path.GetExtension(files[0].FileName);
+                        
+                        
+                        var imageFromDb = await _context.Properties
+                            .Where(m => m.Id == id)
+                            .Select(s => s.Image)
+                            .SingleAsync();
+                        
+                        if (imageFromDb != null) {
+                            property.Image = imageFromDb;
+                        }
 
                         //Delete the original file
                         if (property.Image != null)
                         {
-                         var imagePath = Path.Combine(webRootPath, property.Image.TrimStart('\\'));
+                         var imagePath = Path.Combine(webRootPath, property.Image.TrimStart('/'));
 
                             if (System.IO.File.Exists(imagePath))
                             {
@@ -159,16 +151,7 @@ namespace MalagaRealEstate.Areas.Admin.Controllers
                         {
                             files[0].CopyTo(filesStream);
                         }
-                        property.Image = @"\images\" + id + extension_new;
-                    }
-
-                    var imageFromDb = await _context.Properties
-                        .Where(m => m.Id == id)
-                        .Select(s => s.Image)
-                        .SingleAsync();
-
-                    if (imageFromDb != null) {
-                        property.Image = imageFromDb;
+                        property.Image = @"/images/" + id + extension_new;
                     }
 
                     _context.Update(property);

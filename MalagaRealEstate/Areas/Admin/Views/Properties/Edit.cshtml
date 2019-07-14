@@ -11,180 +11,181 @@
     <div class="row">
 
         <div class="col-md-6">
-            <form enctype="multipart/form-data" asp-action="Edit">
+        
+        <form enctype="multipart/form-data" asp-action="Edit">
 
-                <input asp-for="Latitude" type="hidden" />
-                <input asp-for="Longitude" type="hidden" />
-                <input asp-for="PostedDay" type="hidden" />
-                <input asp-for="Updated" type="hidden" value="@DateTime.Now.ToShortDateString()" />
-                <input asp-for="Address" type="hidden" />
+            
+            <input asp-for="Latitude" type="hidden" />
+            <input asp-for="Longitude" type="hidden" />
+            <input asp-for="PostedDay" type="hidden" />
+            <input asp-for="Updated" type="hidden" value="@DateTime.Now.ToShortDateString()" />
+            <input asp-for="Address" type="hidden" />
 
-                <div class="form-group">
-                    <label class="control-label">Dirección</label>
-                    <input id="direccion" class="form-control" value="@Model.Address" />
-                    <button id="establecerDireccion" class="btn btn-sm btn-success">Chequear validez de nueva dirección</button>
-                </div>
+            <div class="form-group">
+                <label class="control-label">Dirección</label>
+                <input id="direccion" class="form-control" value="@Model.Address" />
+                <button id="establecerDireccion" class="btn btn-sm btn-success">Chequear validez de nueva dirección</button>
+            </div>
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Header" class="control-label"></label>
-                    <input asp-for="Header" class="form-control" />
-                    <span asp-validation-for="Header" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    @Html.TextAreaFor(m => m.Description)
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="Rooms" class="control-label"></label>
-                            <input asp-for="Rooms" min="0" type="number" class="form-control" />
-                            <span asp-validation-for="Rooms" class="text-danger"></span>
-                        </div>
-
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="Bathrooms" class="control-label"></label>
-                            <input asp-for="Bathrooms" min="0" type="number" class="form-control" />
-                            <span asp-validation-for="Bathrooms" class="text-danger"></span>
-                        </div>
-
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Header" class="control-label"></label>
+                <input asp-for="Header" class="form-control" />
+                <span asp-validation-for="Header" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                @Html.TextAreaFor(m => m.Description)
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Rooms" class="control-label"></label>
+                        <input asp-for="Rooms" min="0" type="number" class="form-control" />
+                        <span asp-validation-for="Rooms" class="text-danger"></span>
                     </div>
 
                 </div>
-
-                <div class="row">
-
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="FloorNumber" class="control-label"></label>
-                            <input asp-for="FloorNumber" min="0" type="number" class="form-control" />
-                            <span asp-validation-for="FloorNumber" class="text-danger"></span>
-                        </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Bathrooms" class="control-label"></label>
+                        <input asp-for="Bathrooms" min="0" type="number" class="form-control" />
+                        <span asp-validation-for="Bathrooms" class="text-danger"></span>
                     </div>
 
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="SquareMeters" class="control-label"></label>
-                            <input asp-for="SquareMeters" min="0" type="number" class="form-control" />
-                            <span asp-validation-for="SquareMeters" class="text-danger"></span>
-                        </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="FloorNumber" class="control-label"></label>
+                        <input asp-for="FloorNumber" min="0" type="number" class="form-control" />
+                        <span asp-validation-for="FloorNumber" class="text-danger"></span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label asp-for="OwnerPrice" class="control-label"></label>
-                    <input asp-for="OwnerPrice" min="0" type="number" class="form-control" />
-                    <span asp-validation-for="OwnerPrice" class="text-danger"></span>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="PropType" class="control-label"></label>
-                            <select asp-for="PropType" class="form-control">
-                                <option value="">Seleccionar tipo</option>
-                                <option value="piso">Piso</option>
-                                <option value="casaOChalet">Casa o chalet</option>
-                                <option value="casaRustica">Casa rústica</option>
-                                <option value="duplex">Duplex</option>
-                                <option value="atico">Ático</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label asp-for="PropState" class="control-label"></label>
-                            <select asp-for="PropState" class="form-control">
-                                <option value="">Seleccionar estado</option>
-                                <option value="nueva">Nueva</option>
-                                <option value="bienMantenida">Bien mantenida</option>
-                                <option value="aReciclar">A reciclar</option>
-                            </select>
-                        </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="SquareMeters" class="control-label"></label>
+                        <input asp-for="SquareMeters" min="0" type="number" class="form-control" />
+                        <span asp-validation-for="SquareMeters" class="text-danger"></span>
                     </div>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Garaje" /> @Html.DisplayNameFor(model => model.Garaje)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="AirConditioning" /> @Html.DisplayNameFor(model => model.AirConditioning)
-                            </label>
-                        </div>
+            <div class="form-group">
+                <label asp-for="OwnerPrice" class="control-label"></label>
+                <input asp-for="OwnerPrice" min="0" type="number" class="form-control" />
+                <span asp-validation-for="OwnerPrice" class="text-danger"></span>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="PropType" class="control-label"></label>
+                        <select asp-for="PropType" class="form-control">
+                            <option value="">Seleccionar tipo</option>
+                            <option value="piso">Piso</option>
+                            <option value="casaOChalet">Casa o chalet</option>
+                            <option value="casaRustica">Casa rústica</option>
+                            <option value="duplex">Duplex</option>
+                            <option value="atico">Ático</option>
+                        </select>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Elevator" /> @Html.DisplayNameFor(model => model.Elevator)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Exterior" /> @Html.DisplayNameFor(model => model.Exterior)
-                            </label>
-                        </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="PropState" class="control-label"></label>
+                        <select asp-for="PropState" class="form-control">
+                            <option value="">Seleccionar estado</option>
+                            <option value="nueva">Nueva</option>
+                            <option value="bienMantenida">Bien mantenida</option>
+                            <option value="aReciclar">A reciclar</option>
+                        </select>
                     </div>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Garden" /> @Html.DisplayNameFor(model => model.Garden)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="SwimmingPool" /> @Html.DisplayNameFor(model => model.SwimmingPool)
-                            </label>
-                        </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Garaje" /> @Html.DisplayNameFor(model => model.Garaje)
+                        </label>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Terrace" /> @Html.DisplayNameFor(model => model.Terrace)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="StorageRoom" /> @Html.DisplayNameFor(model => model.StorageRoom)
-                            </label>
-                        </div>
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="AirConditioning" /> @Html.DisplayNameFor(model => model.AirConditioning)
+                        </label>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Modificar" class="btn btn-primary" />  <a class="btn btn-info" asp-action="Index">Volver al listado</a>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Elevator" /> @Html.DisplayNameFor(model => model.Elevator)
+                        </label>
+                    </div>
                 </div>
-            </form>
-        </div>
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Exterior" /> @Html.DisplayNameFor(model => model.Exterior)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Garden" /> @Html.DisplayNameFor(model => model.Garden)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="SwimmingPool" /> @Html.DisplayNameFor(model => model.SwimmingPool)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Terrace" /> @Html.DisplayNameFor(model => model.Terrace)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="StorageRoom" /> @Html.DisplayNameFor(model => model.StorageRoom)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Modificar" class="btn btn-primary" />  <a class="btn btn-info" asp-action="Index">Volver al listado</a>
+            </div>
+            
 
 
-        <div class="col-md-6">
+           
             @{
                 if (Model.Image != null)
                 {
@@ -198,6 +199,7 @@
                         <input name="files" data-max-size="4194304" type="file" accept="image/png, image/jpeg" asp-for="Image" class="form-control" value="@Model.Image" />
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
+                    
                 }
                 else
                 {
@@ -207,15 +209,22 @@
                         <span asp-validation-for="Image" class="text-danger"></span>
                     </div>
                 };
-
             }
-            <div id="map"></div>
+            
+        </form>
         </div>
         
+        <div class="col-md-6">
+            <div id="map"></div>
+        </div>
        
+       
+          
     </div>
 
 </div>
+
+
 
 
 @section Scripts {
@@ -242,7 +251,7 @@
         $.validator.methods.range = function (value, element, param) {
             var globalizedValue = value.replace(",", ".");
             return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
-        }
+        };
 
         $.validator.methods.number = function (value, element) {
             return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
@@ -259,7 +268,6 @@
                     alert('La imagen no debe pesar más de 4 megas, por favor adjunte una imagen diferente.');
                     return false;
                 }
-
             }
         });
     </script>
@@ -272,11 +280,11 @@
                     $("#agregarImagen").show();
                     });
 
-                var myLatLng = {
-                lat: @Model.Latitude.ToString().Replace(",", "."),
-                    lng: @Model.Longitude.ToString().Replace(",", ".") };
+                // var myLatLng = {
+                // lat: @Model.Latitude.ToString().Replace(",", "."),
+                //     lng: @Model.Longitude.ToString().Replace(",", ".") };
 
-                marcadorModulo.mostrarMiMarcador(myLatLng);
+                // marcadorModulo.mostrarMiMarcador(myLatLng);
             });
     </script>
 }
